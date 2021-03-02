@@ -578,11 +578,11 @@ class DBManager():
         db_cursor = self.db.cursor()
         sql = "insert into navi_items (name, link, sup_id, create_date) \
             VALUES ('%s','%s','%s', '%s')" % \
-            (item.name, item.url, item.sup_id, item.create_date)
+            (item.name, item.url, 0, item.create_date)
         try:
             db_cursor.execute(sql)
             self.db.commit()
-        except :
+        except Exception as error:
             self.db.rollback()
             raise
         finally:

@@ -258,9 +258,8 @@ class ClassesHandler(RequestHandler):
 class EditNaviHandler(RequestHandler):
 
     def get(self, *args, **kwargs):
-        list = db_manager.child_navi_models()
         models = db_manager.navi_models(rec_child_items = False)
-        self.render("./admin/navi.html",list=list,classes = models)
+        self.render("./admin/navi.html",list=models,classes = models)
 
 class AddNavigationHandler(RequestHandler):
 
@@ -271,17 +270,6 @@ class AddNavigationHandler(RequestHandler):
         item.name = self.get_argument('name', strip=True, default="")
         item.url = self.get_argument('url', strip=True, default="")
         classify = self.get_argument('classify', strip=True, default="")
-
-        if classify == "期货开户":
-            item.sup_id = "1"
-        elif classify == "手续费返还":
-            item.sup_id = "2"
-        elif classify == "原油期货开户":
-            item.sup_id = "3"
-        elif classify == "股指期货开户":
-            item.sup_id = "4"
-        elif classify == "期货资讯":
-            item.sup_id = "5"
         item.create_date = date_time()
 
         try:
