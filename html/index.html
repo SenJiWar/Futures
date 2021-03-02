@@ -1,34 +1,31 @@
-{% extends "base.html" %} 
+{% extends "base.html" %} {% block head %}
 
-{% block head %}
+<meta name="baidu-site-verification" content="cXr2MK5uLX" />
+<meta name="360-site-verification" content="535eaad473ba3319137ec4dc634a7422" />
+<meta name="google-site-verification" content="PCNzLNn9SCP2eF4XSdkIGD4w-T6QvKLfmaFg1PrV1sE" />
+<meta name="msvalidate.01" content="A074870059816559C6BE420A616F0FB7" />
+<meta name="shenma-site-verification" content="cd1f12f4f8b95740268b8502abcd366a_1523687603">
+<meta name="wlhlauth" content="ee837e91e52c19b61472250c57e26ae1" />
+<meta name="baidu_union_verify" content="92df9e40949db8c98fcef85fe70d3feb">
 
-    <meta name="baidu-site-verification" content="cXr2MK5uLX" />
-    <meta name="360-site-verification" content="535eaad473ba3319137ec4dc634a7422" />
-    <meta name="google-site-verification" content="PCNzLNn9SCP2eF4XSdkIGD4w-T6QvKLfmaFg1PrV1sE" />
-    <meta name="msvalidate.01" content="A074870059816559C6BE420A616F0FB7" />
-    <meta name="shenma-site-verification" content="cd1f12f4f8b95740268b8502abcd366a_1523687603"> 
-    <meta name="wlhlauth" content="ee837e91e52c19b61472250c57e26ae1"/>
-    <meta name="baidu_union_verify" content="92df9e40949db8c98fcef85fe70d3feb">
+<link rel="stylesheet" href="./resources/style/index.css" type="text/css" media="all" />
+<script src="./resources/script/ublue_ImageCarousel.js" type="text/javascript"></script>
+<link rel="stylesheet" href="https://cdn.staticfile.org/Swiper/3.4.2/css/swiper.min.css">
+<script src="https://cdn.staticfile.org/Swiper/3.4.2/js/swiper.min.js"></script>
 
-    <link rel="stylesheet" href="./resources/style/index.css" type="text/css" media="all"/>
-    <script src="./resources/script/ublue_ImageCarousel.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="https://cdn.staticfile.org/Swiper/3.4.2/css/swiper.min.css">
-    <script src="https://cdn.staticfile.org/Swiper/3.4.2/js/swiper.min.js"></script>
-
-    <style>
+<style>
     .swiper-container {
         width: 100%;
         height: 100%;
-    }  
+    }
+    
     .img-container img {
         min-width: 100%;
         min-height: 100%;
     }
-    </style>
+</style>
 
-{% end %}
-
-{% block body %}
+{% end %} {% block body %}
 
 <div class="index-left lph-left">
     <div class="idx-hotlists clr">
@@ -36,9 +33,9 @@
             <div class="swiper-container img-container">
                 <div class="swiper-wrapper">
                     {% for item in focuses %}
-                        <a class="swiper-slide" href="{{ item.url }}" target="_blank">
+                    <a class="swiper-slide" href="{{ item.url }}" target="_blank">
                         <img src="{{ item.image }}" />
-                        </a>
+                    </a>
                     {% end %}
                 </div>
                 <!-- 如果需要分页器 -->
@@ -47,25 +44,25 @@
                 -->
 
                 {% if len(focuses) > 0 %}
-                    <div class="swiper-pagination swiper-pagination-custom"></div>  
+                <div class="swiper-pagination swiper-pagination-custom"></div>
 
-                    <!-- 如果需要导航按钮 -->
-                    <div class="swiper-button-prev"></div>
-                    <div class="swiper-button-next"></div>
-                {% end %}  
-              
+                <!-- 如果需要导航按钮 -->
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+                {% end %}
+
             </div>
 
         </div>
         <div class="hls-links">
             <ul>
                 {% for item in index_array %}
-                    <li>
-                        <a href="article?id={{ item.id }}" title="" target="_blank">
-                            <h4>{{ item.title }}</h4>
-                            <div class="des">{{ item.sub_title }}</div>
-                        </a>
-                    </li>
+                <li>
+                    <a href="article?id={{ item.id }}" title="" target="_blank">
+                        <h4>{{ item.title }}</h4>
+                        <div class="des">{{ item.sub_title }}</div>
+                    </a>
+                </li>
                 {% end %}
             </ul>
         </div>

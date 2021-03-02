@@ -1,16 +1,16 @@
 {% if len(links) > 0 %}
 
-    <dl class="function" id="divLinkage">
-        <dt class="function_t">友情链接</dt>
-        <dd class="function_c">
+<dl class="function" id="divLinkage">
+    <dt class="function_t">友情链接</dt>
+    <dd class="function_c">
 
-            <ul>
-                {% for item in links %}
-                    <li><a href="{{item.url}}" target="_blank" title="{{item.name}}">{{item.name}}</a></li>
-                {% end %}
-            </ul>
+        <ul>
+            {% for item in links %}
+            <li><a href="{{item.url}}" target="_blank" title="{{item.name}}">{{item.name}}</a></li>
+            {% end %}
+        </ul>
 
-        </dd>
-    </dl>
+    </dd>
+</dl>
 
 {% end %}

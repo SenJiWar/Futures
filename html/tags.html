@@ -1,11 +1,4 @@
-{% extends "base.html" %} 
-
-{% block head %}
-
-
-{% end %}
-
-{% block body %}
+{% extends "base.html" %} {% block head %} {% end %} {% block body %}
 
 <div class="artSortList-left lph-left">
     <div class="asl-title clr">
@@ -30,19 +23,17 @@
                         <div class="des">
                             {{ item.sub_title }}
                         </div>
-                        
+
                         <div class="info">
                             <div class="tags">
-                                <i></i> 
-                                <em title="0">[110]</em>
-                                {% for tag in item.tags() %}
-                                    <a href="/tags?keyword={{ tag }}">{{tag}}</a>
-                                {% end %}
+                                <i></i>
+                                <em title="0">[110]</em> {% for tag in item.tags() %}
+                                <a href="/tags?keyword={{ tag }}">{{tag}}</a> {% end %}
                             </div>
                             <div class="time"><i></i> <span> {{item.createtime}} </span></div>
                             <div class="aut">
                                 <a href="" target="_blank">
-                                    <span>{{ item.author }}</span> 
+                                    <span>{{ item.author }}</span>
                                 </a>
                             </div>
                         </div>
@@ -58,38 +49,20 @@
 
     {% if tol_page >= cur_page and tol_page > 1 %}
 
-        <div class="lph-paging1 clr">
+    <div class="lph-paging1 clr">
 
-            <a href="{{baseUrl}}"><span class="page">‹‹</span></a>
+        <a href="{{baseUrl}}"><span class="page">‹‹</span></a> {% for ipage in range(1,tol_page+1) %} {% if ipage == cur_page %}
+        <span class="page now-page">{{ipage}}</span> {% else %}
+        <a href="{{baseUrl+" &page="+str(ipage)}}"><span class="page">{{ipage}}</span></a> {% end %} {% end %} {% if tol_page == cur_page %}
+        <span class="now-page">›</span>
+        <span class="now-page">››</span> {% else %}
+        <a href="{{baseUrl+" &page="+str(cur_page+1)}}"><span class="page">›</span></a>
+        <a href="{{baseUrl+" &page="+str(tol_page)}}"><span class="page">››</span></a> {% end %}
 
-            {% for ipage in range(1,tol_page+1) %}
-                {% if ipage == cur_page %}
-                    <span class="page now-page">{{ipage}}</span>
-                {% else %}
-                    <a href="{{baseUrl+"&page="+str(ipage)}}"><span class="page">{{ipage}}</span></a>
-                {% end %}
-            {% end %}
-
-            {% if tol_page == cur_page %}
-                <span class="now-page">›</span>
-                <span class="now-page">››</span>
-            {% else %}
-                <a href="{{baseUrl+"&page="+str(cur_page+1)}}"><span class="page">›</span></a>
-                <a href="{{baseUrl+"&page="+str(tol_page)}}"><span class="page">››</span></a>
-            {% end %}
-
-        </div>
+    </div>
 
     {% end %}
 
 </div>
 
-
-
-
-{% end %}
-
-{% block bottom %}
-
-
-{% end %}
+{% end %} {% block bottom %} {% end %}

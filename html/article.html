@@ -1,12 +1,6 @@
-{% extends "base.html" %} 
+{% extends "base.html" %} {% block head %}
 
-{% block head %}
-
-    <link rel="stylesheet" href="/resources/style/article.css" type="text/css" media="all" />
-
-{% end %}
-
-{% block body %}
+<link rel="stylesheet" href="/resources/style/article.css" type="text/css" media="all" /> {% end %} {% block body %}
 
 <div class="article-left lph-left">
     <div class="pageTop">
@@ -61,13 +55,11 @@
 
     <div class="pageRelate">
         <ul class="clr">
-            {% for item in relates %}
-
-                {% if relates.index(item) == len(relates)-1 %}
-                <li class="last">
+            {% for item in relates %} {% if relates.index(item) == len(relates)-1 %}
+            <li class="last">
                 {% else %}
                 <li>
-                {% end %}  
+                    {% end %}
                     <div class="img">
                         <a href="article?id={{ item.id }}" target="_blank">
                             <img class="lazy" src="/resources/images/nopic.gif" data-original="{{ item.thumbnail }}">
@@ -76,8 +68,8 @@
                     <div class="name">
                         <h2><a href="article?id={{ item.id }}">{{item.title}}</a></h2>
                     </div>
-                </li>   
-            {% end %}
+                </li>
+                {% end %}
         </ul>
     </div>
 
@@ -100,90 +92,88 @@
 
 </div>
 
-{% end %}
+{% end %} {% block bottom %}
 
-{% block bottom %}
-
-    <script type="text/javascript">
-        function validateForm() {
-            var name = $("#inpName").val()
-            if (name == "") {
-                alert("请输入昵称~");
-                return false;
-            }
-            var comment = $("#txaArticle").val()
-            if (comment == "") {
-                alert("请输入评论的内容~");
-                return false;
-            }
-            return true;
+<script type="text/javascript">
+    function validateForm() {
+        var name = $("#inpName").val()
+        if (name == "") {
+            alert("请输入昵称~");
+            return false;
         }
-    </script>
-    
-    <script type="text/javascript">
-        var ywk_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-        document.write(unescape("%3Cscript src='" + ywk_protocol + "bdimg.share.baidu.com/static/js/bds_s_v2.js%3Fcdnversion%3D395431' id='bdshare_js' data='type=tools&amp;mini=1' type='text/javascript'%3E%3C/script%3E"));
-    </script>
+        var comment = $("#txaArticle").val()
+        if (comment == "") {
+            alert("请输入评论的内容~");
+            return false;
+        }
+        return true;
+    }
+</script>
 
-    <script type="text/javascript">
-        var qcode = {
-            api: "http://qr.liantu.com/api.php?text=",
-            url: window.location.href,
-            exist: false,
-            create: function() {
-                if (!this.exist) {
-                    var image = document.createElement('img');
-                    image.src = this.api + this.url;
-                    image.width = 150;
-                    this.exist = true;
-                    return image;
-                }
-            }
-        };
-        var weixinTimer = null;
-        $('.weixin-btn').hover(function() {
-            clearTimeout(weixinTimer);
-            $('#weixin-qt').css('display', 'block').stop().animate({
-                top: 40,
-                opacity: 1
-            }, 500);
-        }, function() {
-            weixinTimer = setTimeout(function() {
-                $('#weixin-qt').fadeOut(100, function() {
-                    $(this).css('top', 20);
-                });
-            }, 100);
-        });
-        document.getElementById('weixin-qt').insertBefore(qcode.create(), document.getElementById('weixin-qt-msg'));
-        //NAV CU
-        var sname = $(".pi-author i").text();
-        $(".nav a").each(function() {
-            var navcu = $(this).text();
-            if (navcu == sname) {
-                $(this).parent().addClass("cu");
-            }
-        });
-    </script>
+<script type="text/javascript">
+    var ywk_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+    document.write(unescape("%3Cscript src='" + ywk_protocol + "bdimg.share.baidu.com/static/js/bds_s_v2.js%3Fcdnversion%3D395431' id='bdshare_js' data='type=tools&amp;mini=1' type='text/javascript'%3E%3C/script%3E"));
+</script>
 
-    <script>
-    (function(){
+<script type="text/javascript">
+    var qcode = {
+        api: "http://qr.liantu.com/api.php?text=",
+        url: window.location.href,
+        exist: false,
+        create: function() {
+            if (!this.exist) {
+                var image = document.createElement('img');
+                image.src = this.api + this.url;
+                image.width = 150;
+                this.exist = true;
+                return image;
+            }
+        }
+    };
+    var weixinTimer = null;
+    $('.weixin-btn').hover(function() {
+        clearTimeout(weixinTimer);
+        $('#weixin-qt').css('display', 'block').stop().animate({
+            top: 40,
+            opacity: 1
+        }, 500);
+    }, function() {
+        weixinTimer = setTimeout(function() {
+            $('#weixin-qt').fadeOut(100, function() {
+                $(this).css('top', 20);
+            });
+        }, 100);
+    });
+    document.getElementById('weixin-qt').insertBefore(qcode.create(), document.getElementById('weixin-qt-msg'));
+    //NAV CU
+    var sname = $(".pi-author i").text();
+    $(".nav a").each(function() {
+        var navcu = $(this).text();
+        if (navcu == sname) {
+            $(this).parent().addClass("cu");
+        }
+    });
+</script>
+
+<script>
+    (function() {
         var bp = document.createElement('script');
         var curProtocol = window.location.protocol.split(':')[0];
         if (curProtocol === 'https') {
             bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
-        }
-        else {
+        } else {
             bp.src = 'http://push.zhanzhang.baidu.com/push.js';
         }
         var s = document.getElementsByTagName("script")[0];
         s.parentNode.insertBefore(bp, s);
     })();
-    </script>
+</script>
 
-    <script>(function(){
-    var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?ef265c83a6cfb9d92cd32dfec7c81a87":"https://jspassport.ssl.qhimg.com/11.0.1.js?ef265c83a6cfb9d92cd32dfec7c81a87";
-    document.write('<script src="' + src + '" id="sozz"><\/script>');
+<script>
+    (function() {
+        var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?ef265c83a6cfb9d92cd32dfec7c81a87" : "https://jspassport.ssl.qhimg.com/11.0.1.js?ef265c83a6cfb9d92cd32dfec7c81a87";
+        document.write('<script src="' + src + '" id="sozz"><\/script>');
     })();
-    </script>
+</script>
 
 {% end %}

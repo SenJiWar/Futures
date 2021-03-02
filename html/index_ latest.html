@@ -8,16 +8,15 @@
     <div class="wrap">
         <ul>
 
-            {% for item in articles %}
-                {% if item.is_top==1 %}
-                <li class="pbox istop clr">
+            {% for item in articles %} {% if item.is_top==1 %}
+            <li class="pbox istop clr">
                 {% else %}
                 <li class="pbox clr">
-                {% end %}
+                    {% end %}
                     <div class="img">
                         <a class="sort" href="/classes?keyword={{ item.classify }}" target="_blank">{{item.classify}}</a>
                         <a href="article?id={{ item.id }}" target="_blank">
-                        <img alt="{{item.title}}" class="lazy" data-original="{{ item.thumbnail }}" src="/resources/images/nopic.gif" title="{{ item.title }}" width="210" height="140"> 
+                            <img alt="{{item.title}}" class="lazy" data-original="{{ item.thumbnail }}" src="/resources/images/nopic.gif" title="{{ item.title }}" width="210" height="140">
                         </a>
                     </div>
                     <div class="word">
@@ -29,25 +28,23 @@
                         </div>
                         <div class="info">
                             <div class="tags">
-                                <i></i> 
-                                <em title="0">[110]</em>
-                                {% for tag in item.tags() %}
-                                    <a href="/tags?keyword={{ tag }}">{{tag}}</a>
-                                {% end %}
+                                <i></i>
+                                <em title="0">[110]</em> {% for tag in item.tags() %}
+                                <a href="/tags?keyword={{ tag }}">{{tag}}</a> {% end %}
                             </div>
                             <div class="time"><i></i> <span> {{item.createtime}} </span></div>
                             <div class="aut">
                                 <a href="" target="_blank">
-                                    <span>{{ item.author }}</span> 
+                                    <span>{{ item.author }}</span>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </li>
-            {% end %}
+                {% end %}
 
 
-        
+
         </ul>
     </div>
 
@@ -57,27 +54,16 @@
 
 {% if tol_page >= cur_page and tol_page > 1 %}
 
-    <div class="lph-paging1 clr">
+<div class="lph-paging1 clr">
 
-        <a href="/"><span class="page">‹‹</span></a>
+    <a href="/"><span class="page">‹‹</span></a> {% for ipage in range(1,tol_page+1) %} {% if ipage == cur_page %}
+    <span class="page now-page">{{ipage}}</span> {% else %}
+    <a href="/?page={{ipage}}"><span class="page">{{ipage}}</span></a> {% end %} {% end %} {% if tol_page == cur_page %}
+    <span class="now-page">›</span>
+    <span class="now-page">››</span> {% else %}
+    <a href="/?page={{cur_page+1}}"><span class="page">›</span></a>
+    <a href="/?page={{tol_page}}"><span class="page">››</span></a> {% end %}
 
-        {% for ipage in range(1,tol_page+1) %}
-            {% if ipage == cur_page %}
-                <span class="page now-page">{{ipage}}</span>
-            {% else %}
-                <a href="/?page={{ipage}}"><span class="page">{{ipage}}</span></a>
-            {% end %}
-        {% end %}
-
-        {% if tol_page == cur_page %}
-            <span class="now-page">›</span>
-            <span class="now-page">››</span>
-        {% else %}
-            <a href="/?page={{cur_page+1}}"><span class="page">›</span></a>
-            <a href="/?page={{tol_page}}"><span class="page">››</span></a>
-        {% end %}
-
-    </div>
+</div>
 
 {% end %}
-
