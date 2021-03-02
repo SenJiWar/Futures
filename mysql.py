@@ -2,14 +2,14 @@ import pymysql
 from models import *
 
 class DBManager():
-    db = pymysql.connect(host='localhost', port=3306, user='root', passwd='Admin6688', db='fanyong_db', charset='UTF8')
+    db = pymysql.connect(host='localhost', port=3306, user='root', passwd='Admin6688', db='futures_db', charset='UTF8')
 
     def db_ping(self):
         try:
             self.db.ping()()
         except:
             self.db.close()
-            self.db = pymysql.connect(host='localhost', port=3306, user='root', passwd='Admin6688', db='fanyong_db', charset='UTF8')
+            self.db = pymysql.connect(host='localhost', port=3306, user='root', passwd='Admin6688', db='futures_db', charset='UTF8')
 
     def article_count(self):
         
@@ -372,8 +372,6 @@ class DBManager():
 
             self.db.commit()
                 
-            return  models
-
         except :
             self.db.rollback()
             raise
@@ -607,4 +605,4 @@ class DBManager():
             db_cursor.close()
     
 
-DBManager = DBManager()
+db_manager = DBManager()

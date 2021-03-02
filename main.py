@@ -8,8 +8,6 @@ from mysql import *
 from utils import *
 import json
 import types
-from analysis import LogAnalysis
-import sitemap_update
 from notification import *
 
 # 前端首页
@@ -24,8 +22,8 @@ class IndexHandler(RequestHandler):
 
             page = int(self.get_argument('page', strip=True, default=1))
 
-            index_array = DBManager.index_articles()
-            focuses = DBManager.focus_list()
+            index_array = db_manager.index_articles()
+            focuses = db_manager.focus_list()
 
             self.render("./html/index.hpy",index_array=index_array,info=info,focuses=focuses,page=page)
 
@@ -47,7 +45,7 @@ class AdminIndexHandler(RequestHandler):
         password = self.get_argument('password',strip=True)
         if account == "admin" and password == "admin":
             self.set_cookie("username","admin",expires_days=0.5)
-            self.render("./admin/index.html", items = DBManager.articles())
+            self.render("./admin/index.html", items = db_manager.articles())
         else:
             arg = {
                 'title': '登录错误',
@@ -58,7 +56,7 @@ class AdminIndexHandler(RequestHandler):
     def get(self, *args, **kwargs):
         user = self.get_cookie("username")
         if user == 'admin':
-            self.render("./admin/index.html", items = DBManager.articles())
+            self.render("./admin/index.html", items = db_manager.articles())
         else:
             arg = {
                 'title': '验证错误',
@@ -70,19 +68,19 @@ class AdminIndexHandler(RequestHandler):
 class AdminEditHandler(RequestHandler):
     def get(self, *args, **kwargs):
         article = ArticleModel()
-        models = DBManager.navi_models(rec_child_items = False)
+        models = db_manager.navi_models(rec_child_items = False)
         self.render("./admin/edit.html", article = article, classes = models)
 
 # 外部链接
 class AdminLinksHanlder(RequestHandler):
     def get(self, *args, **kwargs):
-        links = DBManager.links()
+        links = db_manager.links()
         self.render("./admin/links.html",links=links)
 
 # 焦点图设置
 class AdminFocusHanlder(RequestHandler):
     def get(self, *args, **kwargs):
-        focuses = DBManager.focus_list()
+        focuses = db_manager.focus_list()
         self.render("./admin/focus.html",focuses=focuses)
  
 # 管理员上传文章
@@ -112,22 +110,15 @@ class AdminUploadArticleHandler(RequestHandler):
 
         try:
             if len(article.id) > 0 :
-                DBManager.updateArticle(article)
+                db_manager.updateArticle(article)
             else :
                 article.createtime = date_time()
-                DBManager.insertArticle(article)
+                db_manager.insertArticle(article)
             self.write("保存成功")
             self.finish()
         except Exception as err:
             self.write("保存失败")
             self.finish()
-
-        #更新SiteMap
-        try:
-            sitemap_update.build_sitemap()
-            sitemap_update.download()
-        except Exception as identifier:
-            pass
         
 
 # 添加外部链接
@@ -138,7 +129,7 @@ class AdminAddLinkHandler(RequestHandler):
         link.name = self.get_argument('name', strip=True, default="")
         link.url = self.get_argument('url', strip=True, default="")
         link.create_date = date_time()
-        DBManager.addlink(link)
+        db_manager.addlink(link)
         self.redirect("/a_links.html")
 
 # 删除链接
@@ -146,7 +137,7 @@ class AdminDeleteLinkHandler(RequestHandler):
 
     def get(self, *args, **kwargs):
         id = self.get_argument('id', strip=True, default="")
-        DBManager.deletelink(id)
+        db_manager.deletelink(id)
         self.redirect("/a_links.html")
 
 
@@ -156,7 +147,7 @@ class DeleteArticleHandler(RequestHandler):
     def get(self, *args, **kwargs):
         id = int(self.get_argument('id', strip=True))
         try:
-            DBManager.deleteArticleBy(id)
+            db_manager.deleteArticleBy(id)
             self.redirect("/a_index.html")
         except:
             pass
@@ -167,18 +158,18 @@ class PreviewArticleHandler(RequestHandler):
     def get(self, *args, **kwargs):
         id = int(self.get_argument('id', strip=True))
         try:
-            article = DBManager.getArticleBy(id)
+            article = db_manager.getArticleBy(id)
             info = PageInfoModel(article.title + "_期货返佣网")
             info.navi_title = article.title
             info.content = article.sub_title
             info.keywords = article.keywords
-            relates = DBManager.relates_article(article.classify)
-            comment_count = DBManager.commentsCountBy(id)
+            relates = db_manager.relates_article(article.classify)
+            comment_count = db_manager.commentsCountBy(id)
             self.render("./html/article.hpy", article=article,info=info, relates=relates,article_id=id,comment_count=comment_count)
         except:
             pass
         # 增加阅读数
-        DBManager.articleViewCountInc(id)
+        db_manager.articleViewCountInc(id)
 
 # 编辑文章
 class EidtArticleHandler(RequestHandler):
@@ -186,8 +177,8 @@ class EidtArticleHandler(RequestHandler):
     def get(self, *args, **kwargs):
         id = int(self.get_argument('id', strip=True))
         try:
-            article = DBManager.getArticleBy(id)
-            models = DBManager.navi_models(rec_child_items = False)
+            article = db_manager.getArticleBy(id)
+            models = db_manager.navi_models(rec_child_items = False)
             self.render("./admin/edit.html", article = article, classes = models)      
         except:
             pass
@@ -205,7 +196,7 @@ class AdminUploadFocusHandler(RequestHandler):
         focus.image = save_image(base64image)
 
         try:
-            article = DBManager.add_focus(focus)
+            db_manager.add_focus(focus)
             self.write("保存成功")
         except:
             self.write("保存失败")
@@ -216,7 +207,7 @@ class AdminDeleteFocusHandler(RequestHandler):
 
     def get(self, *args, **kwargs):
         id = int(self.get_argument('id', strip=True))
-        DBManager.delete_focus(id)
+        db_manager.delete_focus(id)
         self.redirect("a_focus.html")
 
 # 标签列表
@@ -234,8 +225,8 @@ class TagHandler(RequestHandler):
         page = int(self.get_argument('page', strip=True, default=1))
 
         page_count = 15
-        articles = DBManager.articlesBytag(tag,page=page,limit_count=page_count)
-        count = DBManager.articleCountBytag(tag)
+        articles = db_manager.articlesBytag(tag,page=page,limit_count=page_count)
+        count = db_manager.articleCountBytag(tag)
         tol_page = (count-1)//page_count + 1
 
         baseUrl = "/tags?keyword=" + tag
@@ -255,8 +246,8 @@ class ClassesHandler(RequestHandler):
         page = int(self.get_argument('page', strip=True, default=1))
 
         page_count = 15
-        articles = DBManager.articlesByClass(tag,page=page,limit_count=page_count)
-        count = DBManager.articleCountByClass(tag)
+        articles = db_manager.articlesByClass(tag,page=page,limit_count=page_count)
+        count = db_manager.articleCountByClass(tag)
         tol_page = (count-1)//page_count + 1
 
         baseUrl = "/classes?keyword=" + tag
@@ -267,8 +258,8 @@ class ClassesHandler(RequestHandler):
 class EditNaviHandler(RequestHandler):
 
     def get(self, *args, **kwargs):
-        list = DBManager.child_navi_models()
-        models = DBManager.navi_models(rec_child_items = False)
+        list = db_manager.child_navi_models()
+        models = db_manager.navi_models(rec_child_items = False)
         self.render("./admin/navi.html",list=list,classes = models)
 
 class AddNavigationHandler(RequestHandler):
@@ -294,7 +285,7 @@ class AddNavigationHandler(RequestHandler):
         item.create_date = date_time()
 
         try:
-            DBManager.add_navi_item(item)
+            db_manager.add_navi_item(item)
             self.write("保存成功")
         except:
             self.write("保存失败")
@@ -304,7 +295,7 @@ class AddNavigationHandler(RequestHandler):
 class DeleteNaviItemHandler(RequestHandler):
     def get(self, *args, **kwargs):
         id = self.get_argument('id', strip=True, default="")
-        DBManager.delete_navi_item(id)
+        db_manager.delete_navi_item(id)
         self.redirect("/a_navi.html")
 
 # 发表评论
@@ -322,7 +313,7 @@ class PostCommentHandler(RequestHandler):
         ## 发送钉钉通知
         notification(model)
         ## 添加评论
-        DBManager.insert_comment(model)
+        db_manager.insert_comment(model)
 
         self.redirect("article?id="+id)
         
@@ -371,7 +362,7 @@ class KDFileManagerJsonHandler(RequestHandler):
 # UI模块
 class NaviBarModule(tornado.web.UIModule):
     def render(self):
-        navi_items = DBManager.navi_models()
+        navi_items = db_manager.navi_models()
         return self.render_string("./html/navi.hpy",navi_items=navi_items)
 
 class ContentRightModule(tornado.web.UIModule):
@@ -380,50 +371,31 @@ class ContentRightModule(tornado.web.UIModule):
 
 class HotRecomendModule(tornado.web.UIModule):
     def render(self):
-        articles = DBManager.hotArticle()
+        articles = db_manager.hotArticle()
         return self.render_string("./html/hot_recoment.hpy",articles = articles)
 
 class NewArticlesModule(tornado.web.UIModule):
     def render(self,page):
         page_count = 15
-        articles = DBManager.articles(page=page,count=page_count)
-        count = DBManager.article_count()
+        articles = db_manager.articles(page=page,count=page_count)
+        count = db_manager.article_count()
         tol_page = (count-1)//page_count + 1
         return self.render_string("./html/index_ latest.hpy", articles=articles,count=count,cur_page=page,tol_page=tol_page)
 
 class ContentRightTagModule(tornado.web.UIModule):
     def render(self, tag):
-        articles = DBManager.articlesByClass(tag)
+        articles = db_manager.articlesByClass(tag)
         return self.render_string("./html/content_right_tag.hpy", tag=tag, articles=articles)
 
 class LinksModule(tornado.web.UIModule):
     def render(self):
-        links = DBManager.links()
+        links = db_manager.links()
         return self.render_string("./html/links.hpy", links=links)
 
 class CommentsModule(tornado.web.UIModule):
     def render(self,article_id):
-        list = DBManager.commentsBy(article_id)
+        list = db_manager.commentsBy(article_id)
         return self.render_string("./html/comments.hpy",comments=list)
-
-# 日志分析
-class AnalysisHandler(RequestHandler):
-
-    def get(self, *args, **kwargs):
-
-        log_file = open('/var/log/nginx/access.log', 'r')
-
-        la = LogAnalysis(log_file)
-        la.parse()
-
-        res = la.run(isDetail=False)
-
-        log_file.close()
-
-        res = "<pre>" + res + "<pre/>"
-
-        self.write(res)
-    
 
 # 测试用例
 class TestHandler(RequestHandler):
