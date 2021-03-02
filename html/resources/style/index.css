@@ -1,0 +1,343 @@
+@charset "utf-8";
+
+/*-------------------
+*Description:        By www.yiwuku.com
+*Website:            https://app.zblogcn.com/?id=711
+*Author:             尔今 erx@qq.com
+*update:             2015-4-20(Last:2016-09-28)
+-------------------*/
+
+.idx-hotlists {
+    height: 380px;
+    background: #FAFAFA;
+}
+
+#xyslide {
+    position: relative;
+    float: left;
+    width: 500px;
+    height: 380px;
+}
+
+#xyslide .textbg {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: url(../images/hotlists-slideBG.png);
+    z-index: 1
+}
+
+.focusArea {
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    z-index: 998
+}
+
+.focusCon {
+    position: absolute;
+    top: 0;
+}
+
+.focusItem {
+    width: 500px;
+    height: 380px;
+}
+
+.focusItem a {
+    display: block;
+    width: 100%;
+    height: 320px;
+    overflow: hidden;
+}
+
+.focusItem img {
+    width: 100%;
+    height: 100%;
+}
+
+.focusItem h4 {
+    color: #fff;
+    width: 88%;
+    font-size: 20px;
+    text-indent: 20px;
+    line-height: 60px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.focusIndicators {
+    position: absolute;
+    right: 12px;
+    bottom: 68px;
+    height: 9px;
+    z-index: 999;
+}
+
+.focusIndicators a {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    margin-left: 5px;
+    text-indent: -9999px;
+    background: rgba(0, 0, 0, 0);
+    border-radius: 100%;
+    border: solid 1px #999;
+    cursor: pointer
+}
+
+.focusIndicators a.current {
+    background: #f98235;
+    border-color: #f98235
+}
+
+.focusBtn {
+    position: absolute;
+    right: 12px;
+    display: block;
+    width: 16px;
+    height: 9px;
+    background: #888;
+    cursor: pointer;
+    padding: 5px;
+    z-index: 999
+}
+
+.focusBtn:hover {
+    opacity: 0.8
+}
+
+.focusBtn i {
+    display: block;
+    width: 16px;
+    height: 9px;
+    background: url(../images/slidebtn.png) no-repeat;
+}
+
+.focusPrev {
+    bottom: 33px;
+}
+
+.focusNext {
+    bottom: 8px;
+}
+
+.focusPrev i {
+    background-position: 0 0
+}
+
+.focusNext i {
+    background-position: 0 -11px
+}
+
+
+/*头条链接*/
+
+.idx-hotlists .hls-links {
+    padding: 3px 15px 0 515px;
+}
+
+.idx-hotlists .hls-links li {
+    padding: 8px 0;
+    border-bottom: dotted 1px #CBCBCB;
+}
+
+.idx-hotlists .hls-links li a:hover h4 {
+    color: #f98235
+}
+
+.idx-hotlists .hls-links li:last-child {
+    border-bottom: 0;
+}
+
+.idx-hotlists .hls-links li h4 {
+    color: #272322;
+    font-size: 18px;
+    font-weight: bold;
+    height: 28px;
+    line-height: 28px;
+    overflow: hidden;
+}
+
+.idx-hotlists .hls-links li .des {
+    color: #888;
+    font-size: 12px;
+    height: 18px;
+    line-height: 18px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+
+/*首页文章布局*/
+
+.index-pageList {
+    margin-top: 25px;
+}
+
+
+/*四图推荐*/
+
+.idx-selLead {
+    padding-top: 25px;
+}
+
+.idx-selLead .tip {
+    height: 37px;
+    border-bottom: solid 2px #D6D6D6;
+    position: relative;
+    line-height: 37px;
+    margin-bottom: 6px;
+}
+
+.idx-selLead .tip h4 {
+    position: absolute;
+    font-size: 26px;
+    line-height: 1;
+    left: 0;
+    top: 0;
+    padding-bottom: 11px;
+    border-bottom: solid 2px #666;
+}
+
+.idx-selLead .tip .more {
+    position: absolute;
+    right: 0;
+    top: 5px;
+    font-size: 12px;
+    color: #9d9d9d;
+}
+
+.idx-selLead .items {
+    float: left;
+    width: 365px;
+    margin-top: 15px;
+}
+
+.idx-selLead .items.pr15 {
+    padding-right: 15px;
+}
+
+.idx-selLead .items.pb15 {
+    padding-bottom: 15px;
+}
+
+.idx-selLead .items.pl15 {
+    padding-left: 15px;
+}
+
+.idx-selLead .items.mr13 {
+    margin-right: 13px;
+}
+
+.idx-selLead .items.ml14 {
+    margin-left: 14px;
+}
+
+.idx-selLead .items.items-borb {
+    border-bottom: 1px solid #e8e8e8;
+}
+
+.idx-selLead .items-line {
+    float: left;
+    margin-top: 15px;
+    width: 1px;
+    height: 112px;
+    background-color: #e8e8e8;
+}
+
+.idx-selLead .items .pic {
+    float: left;
+}
+
+.idx-selLead .items .pic img {
+    display: block;
+}
+
+.idx-selLead .items .txt {
+    overflow: hidden;
+    padding-left: 14px;
+}
+
+.idx-selLead .items .txt h3 {
+    height: 40px;
+    line-height: 20px;
+    overflow: hidden;
+}
+
+.idx-selLead .items .txt h3 a {
+    font-size: 15px;
+    color: #272322;
+}
+
+.idx-selLead .items:hover h1 a {
+    color: #f98235;
+}
+
+.idx-selLead .items .txt p {
+    height: 36px;
+    line-height: 18px;
+    overflow: hidden;
+    color: #888;
+    font-size: 12px;
+    padding-top: 12px;
+}
+
+#xyslide .swiper-pagination-bullet {
+    opacity: 1;
+    background: none;
+}
+
+#xyslide .swiper-pagination-default {
+    bottom: 50px;
+}
+
+#xyslide .swiper-pagination-default .swiper-pagination-bullet {
+    opacity: .2;
+    background: #dc0a1b;
+}
+
+#xyslide .swiper-pagination-default .swiper-pagination-bullet-active {
+    opacity: 1;
+}
+
+#xyslide .swiper-pagination-custom {
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+    line-height: 40px;
+    background: linear-gradient(rgba(0, 0, 0, .4), rgba(0, 0, 0, .8));
+}
+
+#xyslide .swiper-pagination-custom .swiper-pagination-bullet {
+    width: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    color: #fff;
+    text-align: left;
+}
+
+#xyslide .swiper-pagination-custom .swiper-pagination-bullet-active {
+    opacity: 1;
+}
+
+#xyslide .swiper-button-prev {
+    width: 30px;
+    height: 50px;
+    background: rgba(0, 0, 0, .6) url(../../resources/images/left_arrow.png) no-repeat center;
+    background-size: contain;
+}
+
+#xyslide .swiper-button-next {
+    width: 30px;
+    height: 50px;
+    background: rgba(0, 0, 0, .6) url(../../resources/images/right_arrow.png) no-repeat center;
+    background-size: contain;
+}

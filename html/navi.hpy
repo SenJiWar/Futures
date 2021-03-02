@@ -1,0 +1,20 @@
+<ul class="nav clr">
+    <li><a href="/">首页</a></li>
+
+    {% for item in navi_items %}
+    <li>
+        <a href="/classes?keyword={{ item.name }}">
+            <h1>{{ item.name }}</h1>
+        </a>
+        <ul>
+            {% for child_item in item.childItems %}
+                <li><a href="{{ child_item.link }}">{{ child_item.name }}</a></li>
+            {% end %}
+        </ul>
+    </li>
+    {% end %}
+
+</ul>
+
+<a href="" title="期货返佣网" class="topuser">期货开户享受交易所手续费返还</a>
+        

@@ -1,0 +1,20 @@
+{% if len(articles) > 0 %}
+
+    <div class="kuaixun right-box">
+        <div class="right-box-title">
+            <h3>{{tag}}</h3>
+            <a href="/tags?keyword={{tag}}" target="_blank">MORE&gt;</a>
+        </div>
+        <ul class="kx-ul">
+            {% for item in articles %}
+                <li class="clr">
+                    <a href="article?id={{ item.id }}" target="_blank">
+                        <div class="time">{{ item.formatDate() }}</div>
+                        <div class="title">{{ item.title }}</div>
+                    </a>
+                </li>
+            {% end %}
+        </ul>
+    </div>
+
+{% end %}

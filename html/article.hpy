@@ -1,0 +1,189 @@
+{% extends "base.hpy" %} 
+
+{% block head %}
+
+    <link rel="stylesheet" href="/resources/style/article.css" type="text/css" media="all" />
+
+{% end %}
+
+{% block body %}
+
+<div class="article-left lph-left">
+    <div class="pageTop">
+        <h1>{{ article.title }}</h1>
+    </div>
+    <div class="pageInfo clr">
+        <div class="pi-author">
+            <span>{{ article.createtime }}</span>
+            <i>
+            <a href="/classes?keyword={{ article.classify }}">{{article.classify}}</a>
+            </i> {{ article.author }}
+        </div>
+        <!-- pi-author END -->
+        <div class="pi-comment">
+            <a href="#AjaxCommentBegin" title="已被浏览{{ article.vcount }}次"><span>{{ article.vcount }}</span><i>|</i><span>{{comment_count}}</span><span>条评论</span></a>
+        </div>
+        <!-- pi-comment END -->
+    </div>
+    <!-- pageInfo END -->
+    <div class="pageTag">
+        <ul class="clr">
+            {% for item in article.tags() %}
+            <li><a href="/tags?keyword={{item}}" target="_blank">{{item}}</a></li>
+            {% end %}
+        </ul>
+    </div>
+    <div class="pageCont lph-article-comView article-container">
+        {% raw article.html_content() %}
+    </div>
+
+    <!-- pageCont END -->
+    <div class="pageActive clr">
+        <div class="mark-like-btn clr">
+            <a class="share-btn like-btn" href="javascript:;"><i></i><span>{{ article.vcount }}</span>次浏览</a>
+        </div>
+        <!-- Baidu Button BEGIN -->
+        <div id="bdshare" class="bdshare_t bds_tools get-codes-bdshare baidu-share baidu-share">
+            <a class="bds_tsina weibo-btn share-btn" href="#"><i></i>分享到微博</a>
+            <a class="weixin-btn share-btn" herf="javascript:;" href="#">
+                <i></i>分享到朋友圈
+                <div id="weixin-qt">
+                    <div id="weixin-qt-msg">
+                        手机打开微信，点击底部的“发现”，使用“扫一扫”即可将网页分享至朋友圈。
+                    </div>
+                </div>
+            </a>
+            <a class="bds_more more-btn share-btn" href="#">更多</a>
+        </div>
+    </div>
+
+    {% if len(relates) > 0 %}
+
+    <div class="pageRelate">
+        <ul class="clr">
+            {% for item in relates %}
+
+                {% if relates.index(item) == len(relates)-1 %}
+                <li class="last">
+                {% else %}
+                <li>
+                {% end %}  
+                    <div class="img">
+                        <a href="article?id={{ item.id }}" target="_blank">
+                            <img class="lazy" src="/resources/images/nopic.gif" data-original="{{ item.thumbnail }}">
+                        </a>
+                    </div>
+                    <div class="name">
+                        <h2><a href="article?id={{ item.id }}">{{item.title}}</a></h2>
+                    </div>
+                </li>   
+            {% end %}
+        </ul>
+    </div>
+
+    {% end %}
+
+    <div class="post" id="divCommentPost">
+        <p class="posttop"><a name="comment">发表评论：</a></p>
+        <form id="frmSumbit" target="_self" method="post" action="/post_comment">
+            <input type="hidden" name="article_id" id="inpId" value="{{article_id}}" />
+
+            <p><input type="text" name="inp_name" id="inpName" class="text" value="" size="28" tabindex="1" placeholder="名称(*)" /> <label for="inpName"></label></p>
+            <p><input type="text" name="inp_contact" id="inpEmail" class="text" value="" size="28" tabindex="2" placeholder="联系方式：手机/QQ/邮箱" /> <label for="inpEmail"></label></p>
+
+            <p><textarea name="inp_comment" id="txaArticle" class="text" cols="50" rows="4" tabindex="5" placeholder="我要说的是……"></textarea></p>
+            <p><input name="sumbit" type="submit" tabindex="6" value="提交" onclick="return validateForm()" class="button" /></p>
+        </form>
+    </div>
+
+    {% module Comments(article_id) %}
+
+</div>
+
+{% end %}
+
+{% block bottom %}
+
+    <script type="text/javascript">
+        function validateForm() {
+            var name = $("#inpName").val()
+            if (name == "") {
+                alert("请输入昵称~");
+                return false;
+            }
+            var comment = $("#txaArticle").val()
+            if (comment == "") {
+                alert("请输入评论的内容~");
+                return false;
+            }
+            return true;
+        }
+    </script>
+    
+    <script type="text/javascript">
+        var ywk_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+        document.write(unescape("%3Cscript src='" + ywk_protocol + "bdimg.share.baidu.com/static/js/bds_s_v2.js%3Fcdnversion%3D395431' id='bdshare_js' data='type=tools&amp;mini=1' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+
+    <script type="text/javascript">
+        var qcode = {
+            api: "http://qr.liantu.com/api.php?text=",
+            url: window.location.href,
+            exist: false,
+            create: function() {
+                if (!this.exist) {
+                    var image = document.createElement('img');
+                    image.src = this.api + this.url;
+                    image.width = 150;
+                    this.exist = true;
+                    return image;
+                }
+            }
+        };
+        var weixinTimer = null;
+        $('.weixin-btn').hover(function() {
+            clearTimeout(weixinTimer);
+            $('#weixin-qt').css('display', 'block').stop().animate({
+                top: 40,
+                opacity: 1
+            }, 500);
+        }, function() {
+            weixinTimer = setTimeout(function() {
+                $('#weixin-qt').fadeOut(100, function() {
+                    $(this).css('top', 20);
+                });
+            }, 100);
+        });
+        document.getElementById('weixin-qt').insertBefore(qcode.create(), document.getElementById('weixin-qt-msg'));
+        //NAV CU
+        var sname = $(".pi-author i").text();
+        $(".nav a").each(function() {
+            var navcu = $(this).text();
+            if (navcu == sname) {
+                $(this).parent().addClass("cu");
+            }
+        });
+    </script>
+
+    <script>
+    (function(){
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+    </script>
+
+    <script>(function(){
+    var src = (document.location.protocol == "http:") ? "http://js.passport.qihucdn.com/11.0.1.js?ef265c83a6cfb9d92cd32dfec7c81a87":"https://jspassport.ssl.qhimg.com/11.0.1.js?ef265c83a6cfb9d92cd32dfec7c81a87";
+    document.write('<script src="' + src + '" id="sozz"><\/script>');
+    })();
+    </script>
+
+{% end %}

@@ -1,0 +1,83 @@
+<div class="lph-pageList index-pageList">
+    <!-- 今日更新数量 -->
+    <div class="tip">
+        <h4><span class="yel">期货返佣网</span></h4>
+        <div class="count"><i></i> 已有文章<strong>{{count}}</strong>篇 <em></em></div>
+    </div>
+    <!-- 今日更新数量END -->
+    <div class="wrap">
+        <ul>
+
+            {% for item in articles %}
+                {% if item.is_top==1 %}
+                <li class="pbox istop clr">
+                {% else %}
+                <li class="pbox clr">
+                {% end %}
+                    <div class="img">
+                        <a class="sort" href="/classes?keyword={{ item.classify }}" target="_blank">{{item.classify}}</a>
+                        <a href="article?id={{ item.id }}" target="_blank">
+                        <img alt="{{item.title}}" class="lazy" data-original="{{ item.thumbnail }}" src="/resources/images/nopic.gif" title="{{ item.title }}" width="210" height="140"> 
+                        </a>
+                    </div>
+                    <div class="word">
+                        <a href="article?id={{ item.id }}" target="_blank">
+                            <h2>{{ item.title }}</h2>
+                        </a>
+                        <div class="des">
+                            {{ item.sub_title }}
+                        </div>
+                        <div class="info">
+                            <div class="tags">
+                                <i></i> 
+                                <em title="0">[110]</em>
+                                {% for tag in item.tags() %}
+                                    <a href="/tags?keyword={{ tag }}">{{tag}}</a>
+                                {% end %}
+                            </div>
+                            <div class="time"><i></i> <span> {{item.createtime}} </span></div>
+                            <div class="aut">
+                                <a href="" target="_blank">
+                                    <span>{{ item.author }}</span> 
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            {% end %}
+
+
+        
+        </ul>
+    </div>
+
+    <!-- 分页内容 -->
+
+</div>
+
+{% if tol_page >= cur_page and tol_page > 1 %}
+
+    <div class="lph-paging1 clr">
+
+        <a href="/"><span class="page">‹‹</span></a>
+
+        {% for ipage in range(1,tol_page+1) %}
+            {% if ipage == cur_page %}
+                <span class="page now-page">{{ipage}}</span>
+            {% else %}
+                <a href="/?page={{ipage}}"><span class="page">{{ipage}}</span></a>
+            {% end %}
+        {% end %}
+
+        {% if tol_page == cur_page %}
+            <span class="now-page">›</span>
+            <span class="now-page">››</span>
+        {% else %}
+            <a href="/?page={{cur_page+1}}"><span class="page">›</span></a>
+            <a href="/?page={{tol_page}}"><span class="page">››</span></a>
+        {% end %}
+
+    </div>
+
+{% end %}
+

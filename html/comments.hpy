@@ -1,0 +1,23 @@
+ 
+{% if len(comments) > 0 %}
+
+    <ul class="msg msghead">
+        <li class="tbname"><span>{{len(comments)}}</span>条评论<i></i></li>
+    </ul>
+    <label id="AjaxCommentBegin"></label>
+
+    <!--评论输出-->
+    {% for item in comments %}
+
+    <ul class="msg" id="cmt6">
+        <li class="msgname">
+            <img class="avatar" src="http://www.jujian.org/zb_users/avatar/0.png" alt="" width="32" />
+            <span class="commentname" style="color:#ff9e13">{{item.name}}</span>
+            <small>{{item.submit_date}}</small>
+        </li>
+        <li class="msgarticle">{{item.comment}}<label id="AjaxComment6"></label></li>
+    </ul>
+
+    {% end %}
+
+{% end %}

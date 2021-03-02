@@ -1,0 +1,9 @@
+    <div class="lph-paging1 clr"><a href="/"><span class="page">‹‹</span></a>
+        <span class="page now-page">1</span>
+        <a href="http://www.jujian.org/page_2.html"><span class="page">2</span></a>
+        <a href="http://www.jujian.org/page_3.html"><span class="page">3</span></a>
+        <a href="http://www.jujian.org/page_4.html"><span class="page">4</span></a>
+        <a href="http://www.jujian.org/page_5.html"><span class="page">5</span></a>
+        <a href="http://www.jujian.org/page_2.html"><span class="page">›</span></a>
+        <a href="http://www.jujian.org/page_5.html"><span class="page">››</span></a>
+    </div>
