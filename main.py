@@ -25,7 +25,7 @@ class IndexHandler(RequestHandler):
             index_array = db_manager.index_articles()
             focuses = db_manager.focus_list()
 
-            self.render("./html/index.hpy",index_array=index_array,info=info,focuses=focuses,page=page)
+            self.render("./html/index.html",index_array=index_array,info=info,focuses=focuses,page=page)
 
         except Exception as error:
             pass
@@ -165,7 +165,7 @@ class PreviewArticleHandler(RequestHandler):
             info.keywords = article.keywords
             relates = db_manager.relates_article(article.classify)
             comment_count = db_manager.commentsCountBy(id)
-            self.render("./html/article.hpy", article=article,info=info, relates=relates,article_id=id,comment_count=comment_count)
+            self.render("./html/article.html", article=article,info=info, relates=relates,article_id=id,comment_count=comment_count)
         except:
             pass
         # 增加阅读数
@@ -231,7 +231,7 @@ class TagHandler(RequestHandler):
 
         baseUrl = "/tags?keyword=" + tag
 
-        self.render("./html/tags.hpy",info=info, keyword=tag, articles = articles, cur_page=page, tol_page=tol_page, baseUrl=baseUrl)
+        self.render("./html/tags.html",info=info, keyword=tag, articles = articles, cur_page=page, tol_page=tol_page, baseUrl=baseUrl)
 
 class ClassesHandler(RequestHandler):
 
@@ -252,7 +252,7 @@ class ClassesHandler(RequestHandler):
 
         baseUrl = "/classes?keyword=" + tag
 
-        self.render("./html/tags.hpy",info=info, keyword=tag, articles = articles, cur_page=page, tol_page=tol_page, baseUrl=baseUrl)
+        self.render("./html/tags.html",info=info, keyword=tag, articles = articles, cur_page=page, tol_page=tol_page, baseUrl=baseUrl)
 
 # 导航菜单的显示
 class EditNaviHandler(RequestHandler):
@@ -363,16 +363,16 @@ class KDFileManagerJsonHandler(RequestHandler):
 class NaviBarModule(tornado.web.UIModule):
     def render(self):
         navi_items = db_manager.navi_models()
-        return self.render_string("./html/navi.hpy",navi_items=navi_items)
+        return self.render_string("./html/navi.html",navi_items=navi_items)
 
 class ContentRightModule(tornado.web.UIModule):
     def render(self):
-        return self.render_string("./html/content_right.hpy")
+        return self.render_string("./html/content_right.html")
 
 class HotRecomendModule(tornado.web.UIModule):
     def render(self):
         articles = db_manager.hotArticle()
-        return self.render_string("./html/hot_recoment.hpy",articles = articles)
+        return self.render_string("./html/hot_recoment.html",articles = articles)
 
 class NewArticlesModule(tornado.web.UIModule):
     def render(self,page):
@@ -380,22 +380,22 @@ class NewArticlesModule(tornado.web.UIModule):
         articles = db_manager.articles(page=page,count=page_count)
         count = db_manager.article_count()
         tol_page = (count-1)//page_count + 1
-        return self.render_string("./html/index_ latest.hpy", articles=articles,count=count,cur_page=page,tol_page=tol_page)
+        return self.render_string("./html/index_ latest.html", articles=articles,count=count,cur_page=page,tol_page=tol_page)
 
 class ContentRightTagModule(tornado.web.UIModule):
     def render(self, tag):
         articles = db_manager.articlesByClass(tag)
-        return self.render_string("./html/content_right_tag.hpy", tag=tag, articles=articles)
+        return self.render_string("./html/content_right_tag.html", tag=tag, articles=articles)
 
 class LinksModule(tornado.web.UIModule):
     def render(self):
         links = db_manager.links()
-        return self.render_string("./html/links.hpy", links=links)
+        return self.render_string("./html/links.html", links=links)
 
 class CommentsModule(tornado.web.UIModule):
     def render(self,article_id):
         list = db_manager.commentsBy(article_id)
-        return self.render_string("./html/comments.hpy",comments=list)
+        return self.render_string("./html/comments.html",comments=list)
 
 # 测试用例
 class TestHandler(RequestHandler):
